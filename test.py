@@ -110,7 +110,7 @@ class AIChatApp(QtWidgets.QWidget):
 
         # 聊天记录显示区域
         self.chatDisplay = QtWidgets.QTextBrowser(main_container)
-        self.chatDisplay.setPlaceholderText("聊天记录将显示在这里...")
+        self.chatDisplay.setPlaceholderText("我们开始聊天吧...")
         self.chatDisplay.setStyleSheet(
             """
             QTextBrowser {
@@ -131,7 +131,7 @@ class AIChatApp(QtWidgets.QWidget):
         input_layout.setSpacing(10)
 
         self.inputField = QtWidgets.QLineEdit(main_container)
-        self.inputField.setPlaceholderText("请输入您的问题...")
+        self.inputField.setPlaceholderText("请输入聊天内容...")
         self.inputField.setStyleSheet(
             """
             QLineEdit {
@@ -188,17 +188,6 @@ class AIChatApp(QtWidgets.QWidget):
             )
             return
 
-        self.chatDisplay.append(f"<b>你:</b> {user_input}")
-        self.inputField.clear()
-
-    def processInput(self):
-        user_input = self.inputField.text().strip()
-        if not user_input:
-            self.chatDisplay.append(
-                "<span style='color: gray;'>你: [请输入内容]</span>"
-            )
-            return
-
         # 显示用户输入
         self.chatDisplay.append(f"<b>你:</b> {user_input}")
 
@@ -209,7 +198,9 @@ class AIChatApp(QtWidgets.QWidget):
         self.inputField.clear()
 
         # 调用 AI 接口
-        self.chatDisplay.append("<span style='color: blue;'>星火: [正在思考...]</span>")
+        self.chatDisplay.append(
+            "<span style='color: blue;'><b>宠物:</b> [正在思考...]</span>"
+        )
         QtCore.QCoreApplication.processEvents()  # 刷新界面显示“正在思考...”
 
         # 调用 Spark API 获取回答
@@ -224,7 +215,7 @@ class AIChatApp(QtWidgets.QWidget):
 
         # 显示 AI 的回答
         self.chatDisplay.append(
-            f"<span style='color: green;'><b>星火:</b> {ai_response}</span>"
+            f"<span style='color: green;'><b>宠物:</b> {ai_response}</span>"
         )
         self.getText("assistant", ai_response)
 
